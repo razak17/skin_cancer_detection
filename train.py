@@ -7,7 +7,7 @@ import os
 import shutil
 import pandas as pd
 from keras.preprocessing.image import ImageDataGenerator
-from papers import one, two
+from main import one, two
 
 # Dump all images into a folder and specify the path:
 data_dir = os.getcwd() + "/data/ISIC-images/2020_challenge/"
