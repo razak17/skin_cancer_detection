@@ -6,11 +6,8 @@ Dataset link: https://challenge2020.isic-archive.com/
 import os
 import shutil
 import pandas as pd
-import numpy as np
 from keras.preprocessing.image import ImageDataGenerator
-from matplotlib import pyplot as plt
-from preprocessing import skin_refinement
-
+import papers
 
 # Dump all images into a folder and specify the path:
 data_dir = os.getcwd() + "/data/ISIC-images/2020_challenge/"
@@ -20,12 +17,13 @@ dest_dir = os.getcwd() + "/data/ISIC-images/reorganized/"
 
 # Read the csv file containing image names and corresponding labels
 skin_df = pd.read_csv('data/ISIC-images/metadata.csv')
-print(skin_df['meta.clinical.benign_malignant'].value_counts())
+# print(skin_df['meta.clinical.benign_malignant'].value_counts())
 
 # Extract labels into a list
 label=skin_df['meta.clinical.benign_malignant'].unique().tolist()
+
+# Initialize array to store image classes
 benign_malignant = []
-# print(label)
 
 # Copy images to new dest_dir
 def copy_to_dest(label, data_dir, dest_dir):
@@ -57,16 +55,5 @@ train_data_keras = datagen.flow_from_directory(directory=train_dir,
                                          batch_size=16)  #16 images at a time
                                          # target_size=(32,32))  #Resize images
 
-# We can check images for a single batch.
-x, y = next(train_data_keras)
 
-# View each image
-for i in range (0, 7):
-    image = x[i]
-    float_img = np.uint8(image)  # uint8 will make overflow
-    morph_image = skin_refinement.closing_operation(float_img)
-    sharped_image = skin_refinement.unsharp_mask(image, morph_image)
-    plt.imshow(sharped_image)
-    plt.show()
-
-#Now you can train via model.fit_generator
+papers.one.refine(train_data_keras)
