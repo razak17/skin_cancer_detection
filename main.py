@@ -7,7 +7,7 @@ import os
 import shutil
 import pandas as pd
 from keras.preprocessing.image import ImageDataGenerator
-import papers
+from papers import one, two
 
 # Dump all images into a folder and specify the path:
 data_dir = os.getcwd() + "/data/ISIC-images/2020_challenge/"
@@ -56,4 +56,5 @@ train_data_keras = datagen.flow_from_directory(directory=train_dir,
                                          # target_size=(32,32))  #Resize images
 
 
-papers.one.refine(train_data_keras)
+# one.refine(train_data_keras)
+two.refine(train_data_keras)
