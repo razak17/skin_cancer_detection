@@ -7,10 +7,10 @@ from skimage import exposure
 # Dilate and erode the input image to get rid of hair and other artifacts
 def closing_operation(image):
     kernel = np.ones((7, 7), np.uint8)
-    dil = cv2.dilate(image, kernel, iterations=1)
-    erode = cv2.erode(dil, kernel, iterations=1)
-    # closing = cv2.morphologyEx(image, cv2.MORPH_CLOSE, kernel)
-    return erode
+    # dil = cv2.dilate(image, kernel, iterations=1)
+    # erode = cv2.erode(dil, kernel, iterations=1)
+    closing = cv2.morphologyEx(image, cv2.MORPH_CLOSE, kernel)
+    return closing
 
 
 # Apply the unsharped filter to remove blurring effect from image

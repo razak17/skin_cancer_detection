@@ -1,2 +1,8 @@
 data/ISIC-images/*
+data/HAM10000/*
+data/images/test/*
+data/images/train/*
+data/images/val/*
+data/weights/*
 **/__pycache__/**
+.vscode

@@ -23,8 +23,8 @@ def refine(train_data_keras):
         image = x[i]
         float_img = np.uint8(image)  # uint8 will make overflow
         clahe_applied_perceived_channel = clahe.apply(get_perceive_brightness(float_img))
-        morph_image = closing_operation(float_img)
-        contrast_enhanced_image = enhance_contrast(morph_image)
+        # morph_image = closing_operation(float_img)
+        contrast_enhanced_image = enhance_contrast(float_img)
         illuminated_image = hsv_equalized_img(contrast_enhanced_image, clahe_applied_perceived_channel)
         plt.imshow(contrast_enhanced_image)
         plt.show()
