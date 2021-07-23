@@ -7,7 +7,7 @@ The 7 classes of skin cancer lesions included in this dataset are:
 Melanocytic nevi (nv)
 Melanoma (mel)
 Benign keratosis-like lesions (bkl)
-Basal cell carcinoma (bcc) 
+Basal cell carcinoma (bcc)
 Actinic keratoses (akiec)
 Vascular lesions (vas)
 Dermatofibroma (df)
@@ -16,10 +16,9 @@ import os
 import shutil
 import pandas as pd
 from keras.preprocessing.image import ImageDataGenerator
-from sklearn.model_selection import train_test_split
+# from sklearn.model_selection import train_test_split
 
 from main import one, two
-from preprocessing.split_dataset import split_into_train_test_val
 
 # Dump all images into a folder and specify the path:
 data_dir = os.getcwd() + "/data/HAM10000/all_images/"
@@ -28,7 +27,7 @@ data_dir = os.getcwd() + "/data/HAM10000/all_images/"
 dest_dir = os.getcwd() + "/data/HAM10000/reorganized/"
 
 # Read the csv file containing image names and corresponding labels
-skin_df = pd.read_csv('data/HAM10000/HAM10000_metadata.csv')
+skin_df = pd.read_csv('data/HAM10000/metadata/HAM10000_metadata.csv')
 # print(skin_df['dx'].value_counts())
 
 # Extract labels into a list
@@ -68,9 +67,5 @@ def refine(train_dir):
 
 
 train_dir = os.getcwd() + "/data/images/train/"
-input_folder = 'data/HAM10000/sample/'
-# input_folder = 'data/HAM10000/all_images'
-destination_dir = "data/images"
 
-split_into_train_test_val(input_folder, destination_dir)
-# refine(train_dir)
+refine(train_dir)
