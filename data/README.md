@@ -10,7 +10,7 @@ Run from the project root to split the dataset into training, test and validatio
   python split_dataset.py
   ```
 
-The split images would be stored at [`data/images/`](data/images) in their respective folders.
+The split images would be stored at [`/data/images/`](/data/images) in their respective folders.
 
 
 ### Image Annotation
@@ -19,7 +19,7 @@ We need to annotate the training images for model learning. We use the 70:15:15 
 Copy the labels for train and validation data to [`data/labels/train/`](/data/labels/train/) and [`data/labels/val`](/data/labels/val) respectively.
 
 ### Convert to YOLO Format
-As a final step, convert the VoTT csv format to the YOLOv3 format. To do so, run the conversion script from within the [`data/`](/data/) folder:
+As a final step, convert the VoTT csv format to the YOLOv5 format. To do so, run the conversion script from within the [`data/`](/data/) folder:
 ```
 python convert_to_yolo_format.py
 ```

@@ -1,1 +1,1 @@
-### Copy your HAM10000 metadata files here
+### Copy your HAM10000 metadata files into this directory.
