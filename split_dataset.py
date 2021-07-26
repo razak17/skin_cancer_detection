@@ -3,12 +3,7 @@ import numpy as np
 import shutil
 
 
-def split_into_train_test_val(input_folder, destination_dir):
-    # os.makedirs(root_dir + destination_dir)
-    os.makedirs(destination_dir + '/train')
-    os.makedirs(destination_dir + '/test')
-    os.makedirs(destination_dir + '/val')
-
+def split_into_train_test_val(input_folder):
     src = input_folder  # Folder to copy images from
 
     allFileNames = os.listdir(src)
@@ -40,7 +35,6 @@ def split_into_train_test_val(input_folder, destination_dir):
         shutil.copy(name, "data/images/test")
 
 
-input_folder = 'data/HAM10000/sample/'
-destination_dir = "data/images"
+input_folder = 'data/HAM10000/all_images/'
 
-split_into_train_test_val(input_folder, destination_dir)
+split_into_train_test_val(input_folder)

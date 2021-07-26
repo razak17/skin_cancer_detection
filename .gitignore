@@ -1,5 +1,6 @@
 data/ISIC-images/*
 data/HAM10000/all_images/ISIC*
+data/HAM10000/labels/ISIC*
 data/HAM10000/metadata/HAM10000*
 data/HAM10000/metadata/hmnist*
 data/HAM10000/sample/ISIC*
@@ -7,5 +8,8 @@ data/labels/sample/*
 data/images/test/ISIC*
 data/images/train/ISIC*
 data/images/val/ISIC*
+data/labels/test/ISIC*
+data/labels/train/ISIC*
+data/labels/val/ISIC*
 **/__pycache__/**
 .vscode
