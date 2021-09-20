@@ -54,17 +54,3 @@ refined_resnet = 'data/images/refined_resnet'
 if __name__ == '__main__':
     # split dataset (run once)
     split()
-
-    # Define datagen. Here we can define any transformations we want to apply to images
-    # datagen = ImageDataGenerator()
-
-    # # Images need to be in a sub-dir under the train_dir for it to work
-    # train_data_keras = datagen.flow_from_directory(
-    #     directory=train_dir,
-    #     class_mode='categorical',
-    #     batch_size=16,  #16 images at a time
-    #     target_size=(64, 64))  # images
-
-    # Refine the training images before passing them to the model
-    # one.refine(train_data_keras, refined_yolo)
-    # two.refine(train_data_keras, refined_resnet)
