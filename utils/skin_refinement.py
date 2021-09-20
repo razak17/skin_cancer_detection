@@ -6,9 +6,10 @@ from skimage import exposure
 
 # Dilate and erode the input image to get rid of hair and other artifacts
 def closing_operation(image):
-    kernel = np.ones((7, 7), np.uint8)
+    kernel = np.ones((1, 1), np.uint8)
     # dil = cv2.dilate(image, kernel, iterations=1)
     # erode = cv2.erode(dil, kernel, iterations=1)
+    # return erode
     closing = cv2.morphologyEx(image, cv2.MORPH_CLOSE, kernel)
     return closing
 
@@ -28,7 +29,7 @@ def enhance_contrast(image):
 
 def hsv_equalizer(image, new_channel):
     hsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
-    h,s,v =  cv2.split(hsv)
+    h, s, v = cv2.split(hsv)
     merged_hsv = cv2.merge((h, s, new_channel))
     bgr_img = cv2.cvtColor(merged_hsv, cv2.COLOR_HSV2BGR)
     return bgr_img

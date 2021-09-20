@@ -1,71 +1,70 @@
-"""
-Loading the dataset for skin cancer detection.
-Dataset link: https://www.kaggle.com/kmader/skin-cancer-mnist-ham10000
-Data description: https://arxiv.org/ftp/arxiv/papers/1803/1803.10417.pdf
-
-The 7 classes of skin cancer lesions included in this dataset are:
-Melanocytic nevi (nv)
-Melanoma (mel)
-Benign keratosis-like lesions (bkl)
-Basal cell carcinoma (bcc)
-Actinic keratoses (akiec)
-Vascular lesions (vas)
-Dermatofibroma (df)
-"""
 import os
-import shutil
 import pandas as pd
 from keras.preprocessing.image import ImageDataGenerator
-# from sklearn.model_selection import train_test_split
-
+from utils import split_dataset
 from main import one, two
 
-# Dump all images into a folder and specify the path:
-data_dir = os.getcwd() + "/data/HAM10000/all_images/"
+if not os.path.isdir("data/HAM10000"):
+    os.mkdir("data/HAM10000/")
+    os.mkdir("data/HAM10000/all_images/")
+    os.mkdir("data/HAM10000/reorganized/")
+    os.mkdir("data/HAM10000/metadata/")
+
+# Dump all images into a folder and specify the path
+images_dir = "data/HAM10000/all_images/"
 
 # Path to destination directory where for want subfolders
-dest_dir = os.getcwd() + "/data/HAM10000/reorganized/"
+dest_dir = "data/HAM10000/reorganized/"
 
 # Read the csv file containing image names and corresponding labels
 skin_df = pd.read_csv('data/HAM10000/metadata/HAM10000_metadata.csv')
-# print(skin_df['dx'].value_counts())
+print(skin_df['dx'].value_counts())
 
 # Extract labels into a list
-label = skin_df['dx'].unique().tolist()  #Extract labels into a list
+label = skin_df['dx'].unique().tolist()  # Extract labels into a list
 
 # Initialize array to store image classes
 label_images = []
 
 
-def copy_to_dest(label, label_images, data_dir, dest_dir):
+def split():
+    if not os.path.isdir(dest_dir):
+        # split dataset into various classes (run this once)
+        split_dataset.split_into_classes(label, skin_df, label_images,
+                                         images_dir, dest_dir)
+    else:
+        print("dest_dir already exists.\nRemove it then run the split again.")
+
+    # split dataset into train, test and validation dirs (run this once)
+    train = 'data/dataset/train'
+    test = 'data/dataset/test'
+    val = 'data/dataset/val'
     for i in label:
-        os.mkdir(dest_dir + str(i) + "/")
-        sample = skin_df[skin_df['dx'] == i]['image_id']
-        label_images.extend(sample)
-        for id in label_images:
-            shutil.copyfile((data_dir + "/" + id + ".jpg"),
-                            (dest_dir + i + "/" + id + ".jpg"))
-        label_images = []
+        if not os.path.isdir('data/dataset/' + i):
+            split_dataset.split_into_train_test_val('data/dataset/all_images')
 
 
-# Flow_from_directory Method with keras
-# Useful when the images are sorted and placed in there respective class/label folders
-# Identifies classes automatically from the folder name.
-def refine(train_dir):
+# specify training images directory
+train_dir = "data/images/train"
+
+# Path for refined images
+refined_yolo = 'data/images/refined'
+refined_resnet = 'data/images/refined_resnet'
+
+if __name__ == '__main__':
+    # split dataset (run once)
+    split()
+
     # Define datagen. Here we can define any transformations we want to apply to images
-    datagen = ImageDataGenerator()
+    # datagen = ImageDataGenerator()
 
-    # Use flow_from_directory
-    train_data_keras = datagen.flow_from_directory(
-        directory=train_dir,
-        class_mode='categorical',
-        batch_size=16,  #16 images at a time
-        target_size=(32, 32))  # images
+    # # Images need to be in a sub-dir under the train_dir for it to work
+    # train_data_keras = datagen.flow_from_directory(
+    #     directory=train_dir,
+    #     class_mode='categorical',
+    #     batch_size=16,  #16 images at a time
+    #     target_size=(64, 64))  # images
 
-    one.refine(train_data_keras)
-    # two.refine(train_data_keras)
-
-
-train_dir = os.getcwd() + "/data/images/train/"
-
-refine(train_dir)
+    # Refine the training images before passing them to the model
+    # one.refine(train_data_keras, refined_yolo)
+    # two.refine(train_data_keras, refined_resnet)

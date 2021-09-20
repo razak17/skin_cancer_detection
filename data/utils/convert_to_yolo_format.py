@@ -13,7 +13,7 @@ def get_parent_dir(n=1):
 
 
 sys.path.append(os.path.join(get_parent_dir(1), "utils"))
-from convert_format import convert_vott_csv_to_yolo
+from utils.convert_format import convert_vott_csv_to_yolo
 
 data_folder = os.path.join(get_parent_dir(), "data")
 vott_folder = os.path.join(data_folder, "images", "vott-csv-export")
